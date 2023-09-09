@@ -34,6 +34,8 @@ npx ttunnel start 8080
 
 #### Invalid Host Header
 
+**Host header is being sent automatically**
+
 > If you are trying to tunneling Vue, React or any other frameworks, sometimes it requires Host header to be presented in the request headers. To solve this common issue through ttunnel, run the following command:
 
 ```sh
@@ -50,10 +52,21 @@ npx ttunnel start 8080 --domain=my-awesome-subdomain
 
 ### Arguments & Flags
 
+#### Arguments
+
 - `port` (argument)(number) [required] The local port number to expose through.
+
+#### Flags
+
+- `api-key` (flag) [required] Your TTunnel API Key to make sure all tunnels are authorized.
 - `domain` (flag)(string) Request a specific subdomain on the proxy server. **Note** You may not actually receive this name depending on availability.
-- `endpoint` (flag)(string) URL for the proxy server.
-- `hostname` (flag)(string) Proxy to this hostname instead of `localhost`. **Note** Host header will equal `hostname` value unless you used `host-header` flag.
-- `host-header` (flag)(string)
+- `endpoint` (flag)(string) Used for self-hosted ttunnel version. Defaults to ws://ttunnel.me:4000.
+- `hostname` (flag)(string) Proxy to a custom hostname instead of default one. **Note** Host header will equal `hostname` value unless you used `host-header` flag.
+- `host-header` (flag)(string) set Host header
+- `basic-auth` (flag)(string) enforce basic auth on tunnel endpoint, user:password
+- `request-header-add` (flag)(string) header key:value to add to request
+- `request-header-remove` (flag)(string) header field to remove from request if present
+- `response-header-add` (flag)(string) header key:value to add to response
+- `response-header-remove` (flag)(string) header field to remove from response if present
 
 Run `npx ttunnel help` command to learn more about ttunnel available commands and arguments.

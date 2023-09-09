@@ -4,6 +4,7 @@ import { Spinner } from 'cli-spinner'
 import { IncomingHttpHeaders } from 'http'
 import Debug from 'debug'
 import { CustomWebSocket } from './websocket/customWebsocket'
+import { KeyValuePair } from './commands/types'
 
 interface Omit {
     // eslint-disable-next-line @typescript-eslint/ban-types
@@ -12,13 +13,13 @@ interface Omit {
     }
 }
 
-export const isFunction = (value: any) => typeof value === 'function'
+export const isFunction = (value: any): boolean => typeof value === 'function'
 
-export const isObject = (value: any) => typeof value === 'object'
+export const isObject = (value: any): boolean => typeof value === 'object'
 
-export const isArray = (value: any) => Array.isArray(value)
+export const isArray = (value: any): boolean => Array.isArray(value)
 
-export const isString = (value: any) => typeof value === 'string'
+export const isString = (value: any): boolean => typeof value === 'string'
 
 export const isObjectOrArray = (value: any): boolean => {
     return isObject(value) || Array.isArray(value)
@@ -48,7 +49,7 @@ export const displayError = (...lines: string[]) => {
 }
 
 export const guessWebSocketServerHost =
-    (endpoint: string | undefined): URL => new URL(endpoint ?? 'ws://ttunnel.me:4000')
+    (endpoint: string): URL => new URL(endpoint)
 
 export const cleanSubdomain = (domain: string | undefined): string | null => {
     if (!domain) return null
@@ -93,9 +94,18 @@ export const omit: Omit = (obj, ...keys) => {
     return ret
 }
 
+export const removeHeaders = (
+    headers: IncomingHttpHeaders,
+    keys: string[]
+): IncomingHttpHeaders => {
+    keys.map(key => delete headers[key])
+
+    return headers
+}
+
 export const solveGzipEncodingHeaders = (
     headers: IncomingHttpHeaders
-) => {
+): IncomingHttpHeaders => {
     delete headers['Accept-Encoding']
     delete headers['accept-encoding']
 
@@ -104,7 +114,7 @@ export const solveGzipEncodingHeaders = (
 
 export const mergeOrReplaceHeaders = (
     headers: IncomingHttpHeaders,
-    newHeaders: { key: keyof IncomingHttpHeaders, value: string | string[] }[]
+    newHeaders: KeyValuePair[]
 ): IncomingHttpHeaders => {
     for (const header of newHeaders) {
         headers[header.key] = header.value

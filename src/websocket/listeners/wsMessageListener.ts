@@ -18,7 +18,14 @@ import { CustomWebSocket } from '../customWebsocket'
 export const wsMessageListener =
     (
         websocket: CustomWebSocket,
-        { port, hostname }: StartCommandArguments
+        {
+            port,
+            hostname,
+            requestHeaderAdd,
+            requestHeaderRemove,
+            responseHeaderAdd,
+            responseHeaderRemove,
+        }: StartCommandArguments
     ) =>
         (content: string) => {
             const message = isJsonString(content) as WebSocketMessage<WsMessageTypes>
@@ -26,7 +33,7 @@ export const wsMessageListener =
             if (!message) return
             if (!message.type) return
 
-            log(`${green('recevied')} > ${cyan(message.type.toUpperCase())}\n`)
+            log(`${green('received')} > ${cyan(message.type.toUpperCase())}\n`)
 
             // Handle every message type.
             switch (message.type) {
@@ -45,7 +52,7 @@ export const wsMessageListener =
                     return wsRequestMessageAction(
                         websocket,
                         message as WebSocketRequestMessage,
-                        { port, hostname }
+                        { port, hostname, requestHeaderAdd, requestHeaderRemove, responseHeaderAdd, responseHeaderRemove }
                     )
             }
 

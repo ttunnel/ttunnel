@@ -7,12 +7,16 @@ import { CustomWebSocket } from '../customWebsocket'
 import { getApiKey } from '../../storage'
 
 export const wsOpenListener =
-    (websocket: CustomWebSocket, { domain, apiKey }: Pick<StartCommandArguments, 'domain' | 'apiKey'>) =>
+    (
+        websocket: CustomWebSocket,
+        { domain, apiKey, basicAuth }: Pick<StartCommandArguments, 'domain' | 'apiKey' | 'basicAuth'>
+    ) =>
         () => {
             const wsMessage: WebSocketInitialMessage = {
                 apiKey: apiKey ?? getApiKey(),
                 type: WsMessageTypes.INITIAL_REQUEST,
                 subdomain: cleanSubdomain(domain),
+                basicAuth,
             }
 
             wsSendMessage<WebSocketInitialMessage>(websocket, wsMessage)

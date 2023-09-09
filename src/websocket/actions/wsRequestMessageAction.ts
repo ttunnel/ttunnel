@@ -6,6 +6,7 @@ import { gray } from 'colors'
 import {
     wsSendMessage,
     mergeOrReplaceHeaders,
+    removeHeaders,
     solveGzipEncodingHeaders,
     displayError,
     log,
@@ -16,18 +17,45 @@ import { WsMessageTypes } from '../../enums'
 import pkg from '../../pkg'
 import { CustomWebSocket } from '../customWebsocket'
 
+type ActionCommandProps =
+    Pick<
+        StartCommandArguments,
+        'port'
+        | 'hostname'
+        | 'hostHeader'
+        | 'requestHeaderAdd'
+        | 'requestHeaderRemove'
+        | 'responseHeaderAdd'
+        | 'responseHeaderRemove'
+    >
+
 export const wsRequestMessageAction = (
     websocket: CustomWebSocket,
     message: WebSocketRequestMessage,
-    { port, hostname, hostHeader }: Pick<StartCommandArguments, 'port' | 'hostname' | 'hostHeader'>
+    {
+        port,
+        hostname,
+        hostHeader,
+        requestHeaderAdd,
+        requestHeaderRemove,
+        responseHeaderAdd,
+        responseHeaderRemove,
+    }: ActionCommandProps
 ) => {
-    const { url, requestId, method, headers, body } = message
+    const { url, requestId, method, headers: requestHeaders, body } = message
 
     if (!url) return
 
     logRequestInfo({ requestId, url, method })
 
     const via = `1.1 ${hostname} (proxy/${pkg.version})`
+
+    // We don't want the user to remove or overwrite certian headers like Host, via or X-Forwarded-IP
+    // So user modifications must be at the top of all modifications
+    const headers = mergeOrReplaceHeaders(
+        removeHeaders(requestHeaders, requestHeaderRemove ?? []),
+        requestHeaderAdd ?? []
+    )
 
     const request = http.request(
         {
@@ -58,7 +86,13 @@ export const wsRequestMessageAction = (
                     websocket,
                     createResponseWsMessage(
                         response.statusCode,
-                        response.headers,
+                        mergeOrReplaceHeaders(
+                            removeHeaders(
+                                response.headers,
+                                responseHeaderRemove ?? []
+                            ),
+                            responseHeaderAdd ?? []
+                        ),
                         responseBody,
                         { url, requestId }
                     )

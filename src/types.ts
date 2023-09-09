@@ -1,5 +1,6 @@
 import { WsMessageTypes } from './enums'
 import { IncomingHttpHeaders } from 'http'
+import { BasicAuth } from './commands'
 
 export type WebSocketMessage<T> = {
     type: T
@@ -12,6 +13,7 @@ export type WebSocketErrorMessage = {
 export type WebSocketInitialMessage = {
     apiKey: string
     subdomain?: string | null
+    basicAuth?: BasicAuth
 } & WebSocketMessage<WsMessageTypes.INITIAL_REQUEST>
 
 export type WebSocketHostnameAssignedMessage = {
