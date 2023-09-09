@@ -2,7 +2,14 @@ import http, {
     IncomingHttpHeaders,
     IncomingMessage,
 } from 'http'
-import { wsSendMessage, mergeOrReplaceHeaders, solveGzipEncodingHeaders, displayError } from '../../utils'
+import { gray } from 'colors'
+import {
+    wsSendMessage,
+    mergeOrReplaceHeaders,
+    solveGzipEncodingHeaders,
+    displayError,
+    log,
+} from '../../utils'
 import { StartCommandArguments } from '../../commands'
 import { WebSocketRequestMessage, WebSocketResponseMessage } from '../../types'
 import { WsMessageTypes } from '../../enums'
@@ -17,6 +24,8 @@ export const wsRequestMessageAction = (
     const { url, requestId, method, headers, body } = message
 
     if (!url) return
+
+    logRequestInfo({ requestId, url, method })
 
     const via = `1.1 ${hostname} (proxy/${pkg.version})`
 
@@ -84,3 +93,13 @@ const createResponseWsMessage = (
 })
 
 const parseUrl = (url: string | URL): string => typeof url === 'string' ? url : url.toString()
+
+const logRequestInfo = ({
+    requestId,
+    url,
+    method,
+}: Pick<WebSocketRequestMessage, 'requestId' | 'url' | 'method'>) => {
+    log(`\t${gray.bold('request id')} > ${requestId}\n`)
+    log(`\t${gray.bold('method')} > ${method.toUpperCase()}\n`)
+    log(`\t${gray.bold('url')} > ${url}\n`)
+}

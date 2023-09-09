@@ -53,7 +53,7 @@ npx ttunnel start 8080 --domain=my-awesome-subdomain
 - `port` (argument)(number) [required] The local port number to expose through.
 - `domain` (flag)(string) Request a specific subdomain on the proxy server. **Note** You may not actually receive this name depending on availability.
 - `endpoint` (flag)(string) URL for the proxy server.
-- `hostname` (flag)(string) Proxy to this hostname instead of `localhost`. In most cases `host-header` flag must be presented.
+- `hostname` (flag)(string) Proxy to this hostname instead of `localhost`. **Note** Host header will equal `hostname` value unless you used `host-header` flag.
 - `host-header` (flag)(string)
 
 Run `npx ttunnel help` command to learn more about ttunnel available commands and arguments.
