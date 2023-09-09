@@ -31,7 +31,7 @@ export const wsRequestMessageAction = (
 
     const request = http.request(
         {
-            hostname: 'localhost',
+            hostname,
             path: parseUrl(url),
             port,
             method,
