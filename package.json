@@ -1,0 +1,99 @@
+{
+    "name": "ttunnel",
+    "version": "0.0.1",
+    "description": "TTunnel is a minimal, elegant opensource WebSocket based HTTP tunneling.",
+    "keywords": [
+        "ttunnel",
+        "tunneling",
+        "proxy",
+        "https",
+        "ssl",
+        "ngrok",
+        "localtunnel",
+        "pgrok",
+        "expose",
+        "websocket",
+        "webhook",
+        "testing"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/ttunnel/ttunnel.git"
+    },
+    "author": "Abdallah Mohammed <abdallah.r660@gmail.com>",
+    "license": "GNU",
+    "main": "./src/index.js",
+    "types": "./src/index.d.ts",
+    "bin": {
+        "ttunnel": "bin/cli"
+    },
+    "files": [
+        "build/",
+        "bin/"
+    ],
+    "scripts": {
+        "build": "tsc -p ./",
+        "watch": "tsc -p ./ -w",
+        "lint": "eslint . --ext .ts",
+        "test": "mocha --require ts-node/register \"./tests/*.spec.ts\" \"./tests/**/*.spec.ts\""
+    },
+    "engines": {
+        "node": ">=20"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "config": {
+        "commitizen": {
+            "path": "cz-conventional-changelog"
+        }
+    },
+    "np": {
+        "contents": ".",
+        "anyBranch": false
+    },
+    "nyc": {
+        "exclude": [
+            "test"
+        ],
+        "extension": [
+            ".ts"
+        ]
+    },
+    "dependencies": {
+        "@lesy/compiler": "1.0.0-beta.18",
+        "@lesy/lesy-plugin-help": "1.0.0-beta.18",
+        "@lesy/lesy-plugin-prompt": "1.0.0-beta.18",
+        "@lesy/lesy-plugin-validator": "1.0.0-beta.18",
+        "clear": "^0.1.0",
+        "cli-spinner": "^0.2.10",
+        "colors": "^1.4.0",
+        "commander": "^11.0.0",
+        "debug": "^4.3.4",
+        "finalhandler": "^1.2.0",
+        "got": "^13.0.0",
+        "node-localstorage": "^3.0.5",
+        "serve-static": "^1.15.0",
+        "ws": "^8.13.0"
+    },
+    "devDependencies": {
+        "@types/clear": "^0.1.2",
+        "@types/finalhandler": "^1.2.0",
+        "@types/mocha": "^10.0.1",
+        "@types/node": "^20.5.9",
+        "@types/serve-static": "^1.15.2",
+        "@types/ws": "^8.5.5",
+        "@typescript-eslint/eslint-plugin": "^6.6.0",
+        "@typescript-eslint/parser": "^6.6.0",
+        "dotenv": "^16.3.1",
+        "eslint": "^8.49.0",
+        "eslint-config-prettier": "^9.0.0",
+        "eslint-plugin-prettier": "^5.0.0",
+        "japa": "^4.0.0",
+        "mocha": "^10.2.0",
+        "np": "^8.0.4",
+        "reflect-metadata": "^0.1.13",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.2.2"
+    }
+}

@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+const path = require('path');
+const lesy = require('@lesy/compiler');
+
+exports.default = lesy({
+    isTypescriptApp: true,
+    root: path.resolve(__dirname, '../'),
+    defaultCommand: 'start',
+}).parse();
