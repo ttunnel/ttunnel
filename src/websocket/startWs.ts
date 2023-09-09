@@ -7,7 +7,7 @@ import { RawStartCommandArguments, StartCommandArguments, BasicAuth, KeyValuePai
 export const startWs = (args: RawStartCommandArguments): CustomWebSocket => {
     console.log(`${green('running')} > ${gray('remote websocket connection')}`)
 
-    const websocket = new CustomWebSocket(guessWebSocketServerHost(args.endpoint))
+    const websocket = new CustomWebSocket(guessWebSocketServerHost(args.endpoint ?? 'ws://ttunnel.me:4000'))
 
     registerWsListeners(
         websocket,

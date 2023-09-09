@@ -1,4 +1,5 @@
 import clear from 'clear'
+import { displayError } from '../utils'
 import { initStorage } from '../storage'
 import { startWs } from '../websocket/startWs'
 
@@ -9,6 +10,8 @@ export default {
     args: {
         port: {
             required: true,
+            description: 'Port of running service you want to tunnel it',
+            defaultValue: 80
         },
     },
     flags: {
@@ -56,6 +59,8 @@ export default {
     },
     run: async ({ args, flags }) => {
         const { port } = args
+
+        if (! Number(port)) return displayError('port is a number and it must be forever!')
 
         await initStorage()
 

@@ -1,6 +1,6 @@
 {
     "name": "ttunnel",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "TTunnel is a minimal, elegant opensource WebSocket based HTTP tunneling.",
     "keywords": [
         "ttunnel",
@@ -24,8 +24,9 @@
     "license": "GNU",
     "main": "./build/index.js",
     "types": "./build/index.d.ts",
+    "type": "module",
     "bin": {
-        "ttunnel": "bin/cli"
+        "ttunnel": "bin/cli.cjs"
     },
     "files": [
         "build/",
