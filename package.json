@@ -1,6 +1,6 @@
 {
     "name": "ttunnel",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "TTunnel is a minimal, elegant opensource WebSocket based HTTP tunneling.",
     "keywords": [
         "ttunnel",
@@ -24,9 +24,8 @@
     "license": "GNU",
     "main": "./build/index.js",
     "types": "./build/index.d.ts",
-    "type": "module",
     "bin": {
-        "ttunnel": "bin/cli.cjs"
+        "ttunnel": "bin/cli"
     },
     "files": [
         "build/",
@@ -74,7 +73,8 @@
         "finalhandler": "^1.2.0",
         "node-localstorage": "^3.0.5",
         "serve-static": "^1.15.0",
-        "ws": "^8.13.0"
+        "ws": "^8.13.0",
+        "ts-node": "^10.9.1"
     },
     "devDependencies": {
         "@types/clear": "^0.1.2",
@@ -92,7 +92,6 @@
         "japa": "^4.0.0",
         "mocha": "^10.2.0",
         "np": "^8.0.4",
-        "ts-node": "^10.9.1",
         "typescript": "^5.2.2"
     }
 }
